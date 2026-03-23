@@ -26,23 +26,23 @@
     box-sizing:border-box;
   }
 
-  /* Plant layout */
+  /* Plant layout with more spacing */
   .plan {
-    width:900px;
-    height:600px;
+    width:1000px;
+    height:680px;
     background:var(--floor);
-    border:10px solid var(--wall);
-    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    border:12px solid var(--wall);
+    box-shadow:0 8px 22px rgba(0,0,0,0.12);
     position:relative;
     display:grid;
-    grid-template-columns: 2fr 1.2fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap:12px;
-    padding:12px;
+    gap:24px;
+    padding:20px;
     box-sizing:border-box;
   }
 
-  /* Rooms */
+  /* Rooms — larger with padding */
   .room{
     position:relative;
     background:var(--room-bg);
@@ -53,137 +53,95 @@
     flex-direction:column;
     justify-content:flex-start;
     align-items:flex-start;
-    padding:12px;
+    padding:18px;
+    border-radius:8px;
+    min-height:120px;
   }
 
-  /* Room names and elements */
-  .room h3{margin:0 0 8px 0;font-size:16px}
+  .room h3{margin:0 0 8px 0;font-size:18px}
   .room p{margin:0;font-size:13px;color:#444}
 
-  /* Specific positions */
-  .living{grid-column:1 / 2; grid-row:1 / 3; display:flex; flex-direction:column; justify-content:space-between;}
-  .suite{grid-column:2 / 3; grid-row:1 / 2;}
-  .child{grid-column:2 / 3; grid-row:2 / 3;}
-  .laundry{position:absolute; right:8px; bottom:8px; width:160px; height:120px; border:4px solid #333; background:var(--room-bg); padding:10px; box-sizing:border-box;}
+  /* Specific placements */
+  .living{grid-column:1 / 3; grid-row:1 / 3; display:flex; flex-direction:column; justify-content:space-between; gap:12px; min-width:520px;}
+  .suite{grid-column:3 / 4; grid-row:1 / 2; min-width:260px;}
+  .child{grid-column:3 / 4; grid-row:2 / 3; min-width:260px;}
+  .laundry{position:absolute; right:28px; bottom:28px; width:220px; height:140px; border:4px solid #333; background:var(--room-bg); padding:14px; box-sizing:border-box; border-radius:8px;}
 
-  /* Doors (simple lines) */
-  .door {
-    position:absolute;
-    width:36px;
-    height:6px;
-    background:#4b3f2f;
-    transform-origin:left center;
-  }
-  /* door positions */
-  .door.living-suite{right:calc(-4px); top:110px; transform:rotate(90deg) translateX(-18px);}
-  .door.living-entrance{left:14px; top:8px;}
-  .door.living-child{right:calc(-4px); bottom:110px; transform:rotate(90deg) translateX(-18px);}
-  .door.suite-bath{left:10px; bottom:12px; width:46px; height:6px; transform:rotate(0deg);}
+  /* Doors (decorative) */
+  .door {position:absolute;width:46px;height:8px;background:#4b3f2f;border-radius:4px;}
+  .door.living-suite{right:-6px; top:160px; transform:rotate(90deg);}
+  .door.living-child{right:-6px; bottom:160px; transform:rotate(90deg);}
+  .door.living-entrance{left:18px; top:12px;}
+  .door.suite-bath{left:12px; bottom:18px; width:56px; height:8px;}
 
-  /* Bathroom inside suite (small) */
-  .bath{
-    position:absolute;
-    left:12px;
-    bottom:12px;
-    width:120px;
-    height:100px;
-    border:3px dashed #777;
-    background:linear-gradient(180deg,#fbfbfb,#fff);
-    padding:8px;
-    box-sizing:border-box;
-    font-size:12px;
-  }
+  .bath{position:absolute; left:14px; bottom:14px; width:140px; height:120px; border:3px dashed #777; background:linear-gradient(180deg,#fbfbfb,#fff); padding:10px; box-sizing:border-box; font-size:12px; border-radius:6px;}
 
   /* Light overlay */
-  .light-overlay{
-    pointer-events:none;
-    position:absolute;
-    inset:0;
-    mix-blend-mode:screen;
-    transition:background-color 280ms linear, box-shadow 280ms linear;
-  }
+  .light-overlay{pointer-events:none;position:absolute; inset:0; mix-blend-mode:screen; transition:background-color 240ms linear, box-shadow 240ms linear; border-radius:6px;}
   .light-overlay.off{background:var(--light-off); box-shadow:none;}
-  .light-overlay.on{background:var(--light-on); box-shadow:0 0 80px 30px rgba(255,220,120,0.08);}
+  .light-overlay.on{background:var(--light-on); box-shadow:0 0 120px 45px rgba(255,220,120,0.10);}
 
-  /* Room-level overlay containers */
-  .room .overlay{position:absolute; inset:0; pointer-events:none;}
-  .living .overlay{border-radius:2px;}
-  .suite .overlay{}
-  .child .overlay{}
-  .laundry .overlay{}
-
-  /* Switch UI */
-  .controls{
-    width:260px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    align-self:flex-start;
-  }
-  .control {
-    background:#fff;
-    border:1px solid #ddd;
-    padding:10px;
-    border-radius:8px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-  }
-  .control .label{font-size:14px}
-  .switch{
-    width:46px;
-    height:26px;
-    background:var(--switch-bg);
-    border-radius:18px;
+  /* Switch inside each room (visible button) */
+  .room .room-switch{
     position:relative;
-    box-shadow:inset 0 -2px 0 rgba(0,0,0,0.06);
+    margin-top:12px;
+    align-self:flex-end;
+  }
+  .btn-switch{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:8px;
+    background:linear-gradient(180deg,#fff,#f3f3f3);
+    border:1px solid #d0d0d0;
     cursor:pointer;
-    flex-shrink:0;
+    user-select:none;
+    box-shadow:0 2px 6px rgba(0,0,0,0.06);
+    font-size:14px;
   }
-  .switch .knob{
-    position:absolute; top:3px; left:3px;
-    width:20px; height:20px; background:#fff; border-radius:50%;
-    transition:left 180ms ease, background 180ms;
-    box-shadow:0 2px 6px rgba(0,0,0,0.12);
-  }
-  .switch.on{background:#7bd389;}
-  .switch.on .knob{left:23px; background:#fff;}
+  .btn-switch .dot{width:14px;height:14px;border-radius:50%;background:#cfcfcf;border:1px solid #bfbfbf;}
+  .btn-switch.on{background:linear-gradient(180deg,#e6fff0,#d7fbe8);border-color:#9fe1b0;}
+  .btn-switch.on .dot{background:#39b54a;box-shadow:0 0 6px rgba(57,181,74,0.35);}
 
-  /* Icons (simple) */
-  .icon{
-    width:36px;height:36px;border-radius:6px;background:linear-gradient(180deg,#fff,#f0f0f0);display:inline-flex;align-items:center;justify-content:center;border:1px solid #e0e0e0;font-size:18px;color:#666;
-  }
+  .icon{width:44px;height:44px;border-radius:8px;background:linear-gradient(180deg,#fff,#f0f0f0);display:inline-flex;align-items:center;justify-content:center;border:1px solid #e0e0e0;font-size:20px;color:#666}
 
-  /* Legend */
+  .controls{width:260px;display:flex;flex-direction:column;gap:12px;align-self:flex-start}
+  .control{background:#fff;border:1px solid #ddd;padding:10px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:10px}
   .legend{font-size:13px;color:#333}
   footer{margin-top:12px;font-size:12px;color:#666}
+
+  /* Responsive */
+  @media (max-width:980px){
+    .plan{width:92vw;height:80vh;grid-template-columns:1fr;grid-template-rows:auto auto auto;gap:14px;}
+    .living{grid-column:1/2;grid-row:1/2}
+    .suite{grid-column:1/2;grid-row:2/3}
+    .child{grid-column:1/2;grid-row:3/4}
+    .laundry{position:static;width:100%;height:auto;}
+  }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="plan" id="plan">
     <div class="room living" id="living">
-      <div style="display:flex;gap:12px;align-items:center;width:100%;justify-content:space-between;">
+      <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
         <div>
           <h3>Sala de Estar / Jantar</h3>
           <p>Espaço integrado com sofá e mesa.</p>
         </div>
         <div style="text-align:right">
           <div class="icon">🛋️</div>
-          <p style="margin:6px 0 0 0;font-size:12px;color:#666">Área social</p>
         </div>
       </div>
 
-      <div style="display:flex;gap:12px;align-items:center;">
-        <div style="flex:1">
-          <div style="height:140px;background:linear-gradient(180deg,#fff,#fbfbfb);border-radius:6px;border:1px dashed #e2e2e2;display:flex;align-items:center;justify-content:center;color:#bbb">planta (vista)</div>
-        </div>
-        <div style="width:180px">
-          <p style="font-size:13px;margin:0 0 8px 0">Interruptor central:</p>
-          <div class="control">
-            <div class="label">Luz Sala</div>
-            <div class="switch" data-target="living" id="switch-living"><div class="knob"></div></div>
+      <div style="display:flex;gap:18px;align-items:center;width:100%">
+        <div style="flex:1;height:220px;background:linear-gradient(180deg,#fff,#fbfbfb);border-radius:8px;border:1px dashed #e2e2e2;display:flex;align-items:center;justify-content:center;color:#bbb">Planta (vista)</div>
+
+        <div style="width:220px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:13px;color:#444">Interruptor no cômodo:</div>
+          <div class="room-switch">
+            <button class="btn-switch" id="btn-living" data-target="living" aria-pressed="false"><span class="dot"></span><span>Luz Sala</span></button>
           </div>
         </div>
       </div>
@@ -200,20 +158,18 @@
     <div class="room suite" id="suite">
       <h3>Quarto com Suíte</h3>
       <p>Cama casal, armário e banheiro privativo.</p>
+
       <div class="bath">
         <strong>Banho (suíte)</strong>
         <p style="margin-top:6px;font-size:12px;color:#444">Vaso, pia e box</p>
       </div>
 
-      <div style="position:absolute; right:12px; top:12px;">
+      <div style="position:absolute; right:14px; top:14px;">
         <div class="icon">🛏️</div>
       </div>
 
-      <div style="position:absolute; left:12px; top:48px; width:120px">
-        <div class="control">
-          <div class="label">Luz Suíte</div>
-          <div class="switch" data-target="suite" id="switch-suite"><div class="knob"></div></div>
-        </div>
+      <div style="position:absolute; left:14px; bottom:18px;">
+        <button class="btn-switch" id="btn-suite" data-target="suite" aria-pressed="false"><span class="dot"></span><span>Luz Suíte</span></button>
       </div>
 
       <div class="overlay">
@@ -227,15 +183,12 @@
       <h3>Quarto do Filho</h3>
       <p>Cama, escrivaninha e brinquedos.</p>
 
-      <div style="position:absolute; right:12px; top:12px;">
+      <div style="position:absolute; right:14px; top:14px;">
         <div class="icon">🧸</div>
       </div>
 
-      <div style="position:absolute; left:12px; top:48px; width:160px">
-        <div class="control">
-          <div class="label">Luz Quarto Filho</div>
-          <div class="switch" data-target="child" id="switch-child"><div class="knob"></div></div>
-        </div>
+      <div style="position:absolute; left:14px; bottom:18px;">
+        <button class="btn-switch" id="btn-child" data-target="child" aria-pressed="false"><span class="dot"></span><span>Luz Quarto Filho</span></button>
       </div>
 
       <div class="overlay">
@@ -244,15 +197,12 @@
     </div>
 
     <div class="laundry" id="laundry">
-      <h3 style="margin:0 0 8px 0;font-size:14px">Lavanderia</h3>
+      <h3 style="margin:0 0 8px 0;font-size:16px">Lavanderia</h3>
       <p style="font-size:13px;margin:0 0 8px 0">Máquina e tanque.</p>
-      <div style="display:flex;gap:8px;align-items:center;">
+      <div style="display:flex;gap:10px;align-items:center;">
         <div class="icon">🧺</div>
         <div style="flex:1">
-          <div class="control" style="margin-top:6px">
-            <div class="label">Luz Lavanderia</div>
-            <div class="switch" data-target="laundry" id="switch-laundry"><div class="knob"></div></div>
-          </div>
+          <button class="btn-switch" id="btn-laundry" data-target="laundry" aria-pressed="false"><span class="dot"></span><span>Luz Lavanderia</span></button>
         </div>
       </div>
 
@@ -264,82 +214,62 @@
   </div>
 
   <div class="controls" aria-hidden="true">
-    <div class="legend"><strong>Controles</strong></div>
+    <div class="legend"><strong>Estados</strong></div>
     <div class="control"><div class="label">Sala</div><div id="state-living">Desligada</div></div>
     <div class="control"><div class="label">Suíte</div><div id="state-suite">Desligada</div></div>
     <div class="control"><div class="label">Quarto Filho</div><div id="state-child">Desligada</div></div>
     <div class="control"><div class="label">Lavanderia</div><div id="state-laundry">Desligada</div></div>
-    <footer>Toque nos interruptores para alternar as luzes.</footer>
+    <footer>Clique nos botões dentro de cada cômodo para ligar/desligar as luzes.</footer>
   </div>
 </div>
 
 <script>
-  // Simple light toggle logic
   (function(){
-    const switches = document.querySelectorAll('.switch');
-    const states = {
-      living:false,
-      suite:false,
-      child:false,
-      laundry:false
-    };
+    const btns = document.querySelectorAll('.btn-switch');
+    const states = { living:false, suite:false, child:false, laundry:false };
 
     function setState(name, on){
       states[name] = !!on;
-      // toggle switch visual
-      const sw = document.querySelector('.switch[data-target="'+name+'"]');
-      if(sw){
-        sw.classList.toggle('on', !!on);
-        sw.setAttribute('aria-pressed', !!on);
+      const btn = document.querySelector('.btn-switch[data-target="'+name+'"]');
+      if(btn){
+        btn.classList.toggle('on', !!on);
+        btn.setAttribute('aria-pressed', !!on);
       }
-      // overlay
       const overlay = document.querySelector('.light-overlay[data-overlay="'+name+'"]');
       if(overlay){
         overlay.classList.toggle('on', !!on);
         overlay.classList.toggle('off', !on);
       }
-      // state label
       const label = document.getElementById('state-'+name);
       if(label) label.textContent = on ? 'Ligada' : 'Desligada';
-      // optional: ambient light effect on plan (slightly brighten entire plan when many lights on)
       const plan = document.getElementById('plan');
       const onCount = Object.values(states).filter(Boolean).length;
-      plan.style.filter = onCount ? 'brightness(' + (1 + onCount*0.03) + ')' : 'none';
+      plan.style.filter = onCount ? 'brightness(' + (1 + onCount*0.035) + ')' : 'none';
     }
 
-    switches.forEach(s => {
-      s.addEventListener('click', () => {
-        const name = s.dataset.target;
+    btns.forEach(b=>{
+      b.addEventListener('click', ()=> {
+        const name = b.dataset.target;
         setState(name, !states[name]);
       });
-      // keyboard accessibility
-      s.setAttribute('role','button');
-      s.setAttribute('tabindex','0');
-      s.addEventListener('keydown', (e)=>{
-        if(e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          s.click();
-        }
+      b.addEventListener('keydown', (e)=>{
+        if(e.key==='Enter' || e.key===' ') { e.preventDefault(); b.click(); }
       });
     });
 
-    // Initialize overlays to off
-    Object.keys(states).forEach(k => setState(k,false));
+    // Initialize
+    Object.keys(states).forEach(k=> setState(k,false));
 
-    // Optional: double-click on room toggles its light
+    // Double-click room to toggle (extra)
     const rooms = document.querySelectorAll('.room, .laundry');
-    rooms.forEach(r => {
-      r.addEventListener('dblclick', () => {
+    rooms.forEach(r=>{
+      r.addEventListener('dblclick', ()=>{
         const id = r.id;
         if(id && states.hasOwnProperty(id)) setState(id, !states[id]);
       });
     });
 
-    // Expose for console debugging (not required)
-    window._lights = {
-      get: ()=> ({...states}),
-      set: (n,v)=> setState(n,!!v)
-    };
+    window._lights = { get: ()=> ({...states}), set: (n,v)=> setState(n,!!v) };
   })();
 </script>
 </body>
